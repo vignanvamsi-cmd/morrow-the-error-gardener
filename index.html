@@ -1,0 +1,900 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Morrow — The Error Gardener. A tiny digital creature who transforms your forgotten mistakes into extraordinary plants." />
+  <title>Morrow — The Error Gardener</title>
+
+  <!-- Google Fonts: Playfair Display (editorial serif) + Fredoka (rounded accent) -->
+  <!-- Fallback fonts defined in CSS so the site works if these fail to load -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;500;600&family=Playfair+Display:ital,wght@0,700;0,900;1,700&family=Lora:ital,wght@0,400;1,400&display=swap"
+    rel="stylesheet"
+  />
+
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+  <!-- ══════════════════════════════════════════════
+       SKIP LINK — accessibility: keyboard users
+  ══════════════════════════════════════════════ -->
+  <a class="skip-link" href="#main-content">Skip to main content</a>
+
+  <!-- ══════════════════════════════════════════════
+       SPARKLE CURSOR CANVAS (optional side quest)
+  ══════════════════════════════════════════════ -->
+  <canvas id="sparkle-canvas" aria-hidden="true"></canvas>
+
+  <!-- ══════════════════════════════════════════════
+       TOP NAV BAR
+  ══════════════════════════════════════════════ -->
+  <header class="site-nav" role="banner">
+    <div class="nav-inner">
+      <a class="nav-brand" href="#hero" aria-label="Morrow — The Error Gardener, home">
+        <span class="nav-flower" aria-hidden="true">✿</span> Morrow
+      </a>
+      <nav aria-label="Site sections">
+        <a href="#character">About</a>
+        <a href="#projects">Projects</a>
+        <a href="#story">Story</a>
+        <a href="#garden">Garden</a>
+        <a href="#footer">Credits</a>
+      </nav>
+      <!-- Day/Night Toggle -->
+      <button
+        id="theme-toggle"
+        class="theme-btn"
+        aria-label="Switch to night mode"
+        aria-pressed="false"
+        title="Toggle day / night mode"
+      >
+        <span class="theme-icon" aria-hidden="true">🌙</span>
+        <span class="theme-label">Night</span>
+      </button>
+    </div>
+  </header>
+
+  <!-- ══════════════════════════════════════════════
+       HERO / WELCOME
+  ══════════════════════════════════════════════ -->
+  <main id="main-content">
+    <section id="hero" class="hero-section" aria-label="Welcome to Morrow's garden">
+
+      <!-- Early-web browser window decoration -->
+      <div class="browser-window" aria-hidden="true">
+        <div class="browser-bar">
+          <span class="browser-dot dot-red"></span>
+          <span class="browser-dot dot-yellow"></span>
+          <span class="browser-dot dot-green"></span>
+          <span class="browser-url">morrow.garden / hello ✿</span>
+        </div>
+        <div class="browser-status">
+          <span class="pixel-flower">❀</span> Loading wonders…
+          <span class="pixel-flower">❀</span>
+        </div>
+      </div>
+
+      <div class="hero-content">
+        <!-- Morrow SVG Character Illustration -->
+        <div class="morrow-wrap" id="morrow-character" aria-label="Morrow the Error Gardener — a small rounded digital creature with expressive eyes and tiny sprouting flowers">
+          <svg
+            class="morrow-svg"
+            viewBox="0 0 200 240"
+            xmlns="http://www.w3.org/2000/svg"
+            role="img"
+            aria-label="Morrow character illustration"
+            width="200"
+            height="240"
+          >
+            <!-- Glow aura -->
+            <ellipse cx="100" cy="220" rx="55" ry="10" fill="#a34063" opacity="0.18" class="morrow-shadow"/>
+
+            <!-- Body — rounded blob -->
+            <ellipse cx="100" cy="148" rx="55" ry="60" fill="#5c4033"/>
+            <!-- Body highlight -->
+            <ellipse cx="82" cy="115" rx="18" ry="22" fill="#7a5644" opacity="0.5"/>
+
+            <!-- Tummy patch -->
+            <ellipse cx="100" cy="158" rx="30" ry="28" fill="#fff8f1" opacity="0.9"/>
+
+            <!-- Tummy pixel heart -->
+            <rect x="93" y="151" width="3" height="3" fill="#a34063"/>
+            <rect x="104" y="151" width="3" height="3" fill="#a34063"/>
+            <rect x="90" y="154" width="17" height="3" fill="#a34063"/>
+            <rect x="93" y="157" width="14" height="3" fill="#a34063"/>
+            <rect x="96" y="160" width="8" height="3" fill="#a34063"/>
+            <rect x="99" y="163" width="2" height="3" fill="#a34063"/>
+
+            <!-- Head -->
+            <circle cx="100" cy="88" r="48" fill="#5c4033"/>
+            <!-- Head highlight -->
+            <ellipse cx="82" cy="68" rx="16" ry="14" fill="#7a5644" opacity="0.4"/>
+
+            <!-- ── EYES (the pupils move via JS) ── -->
+            <g id="morrow-eyes">
+              <!-- Left eye socket -->
+              <ellipse cx="84" cy="88" rx="13" ry="14" fill="#fff8f1"/>
+              <!-- Right eye socket -->
+              <ellipse cx="116" cy="88" rx="13" ry="14" fill="#fff8f1"/>
+              <!-- Left pupil group -->
+              <g id="eye-left">
+                <circle cx="84" cy="88" r="7" fill="#a34063"/>
+                <circle cx="84" cy="88" r="3.5" fill="#1a0a0e"/>
+                <!-- Shine -->
+                <circle cx="87" cy="85" r="2" fill="#fff8f1"/>
+              </g>
+              <!-- Right pupil group -->
+              <g id="eye-right">
+                <circle cx="116" cy="88" r="7" fill="#a34063"/>
+                <circle cx="116" cy="88" r="3.5" fill="#1a0a0e"/>
+                <!-- Shine -->
+                <circle cx="119" cy="85" r="2" fill="#fff8f1"/>
+              </g>
+            </g>
+
+            <!-- Pixel blush marks -->
+            <rect x="67" y="97" width="10" height="4" fill="#e8a0b8" opacity="0.7" rx="2"/>
+            <rect x="123" y="97" width="10" height="4" fill="#e8a0b8" opacity="0.7" rx="2"/>
+
+            <!-- Tiny smile -->
+            <path d="M92 105 Q100 113 108 105" stroke="#fff8f1" stroke-width="2.5" fill="none" stroke-linecap="round"/>
+
+            <!-- ── LITTLE EARS ── -->
+            <ellipse cx="56" cy="72" rx="10" ry="14" fill="#4a3028"/>
+            <ellipse cx="56" cy="72" rx="6" ry="9" fill="#c87da0" opacity="0.7"/>
+            <ellipse cx="144" cy="72" rx="10" ry="14" fill="#4a3028"/>
+            <ellipse cx="144" cy="72" rx="6" ry="9" fill="#c87da0" opacity="0.7"/>
+
+            <!-- ── SPROUTING FLOWERS ON HEAD ── -->
+            <!-- Stem left -->
+            <rect x="80" y="34" width="3" height="18" fill="#6aad5e" rx="1" class="flower-stem"/>
+            <!-- Flower left: petals -->
+            <circle cx="75" cy="32" r="5" fill="#e8a0b8" class="flower-petal float-a"/>
+            <circle cx="85" cy="28" r="5" fill="#e8a0b8" class="flower-petal float-a"/>
+            <circle cx="82" cy="36" r="5" fill="#c87da0" class="flower-petal float-a"/>
+            <!-- Flower left: center -->
+            <circle cx="80" cy="32" r="5" fill="#fff8f1" class="float-a"/>
+            <circle cx="80" cy="32" r="2.5" fill="#f5c842"/>
+
+            <!-- Stem right -->
+            <rect x="117" y="30" width="3" height="22" fill="#6aad5e" rx="1" class="flower-stem"/>
+            <!-- Flower right: petals -->
+            <circle cx="112" cy="28" r="5" fill="#a5c4f0" class="flower-petal float-b"/>
+            <circle cx="122" cy="24" r="5" fill="#a5c4f0" class="flower-petal float-b"/>
+            <circle cx="120" cy="32" r="5" fill="#7fb3e8" class="flower-petal float-b"/>
+            <!-- Flower right: center -->
+            <circle cx="118" cy="28" r="5" fill="#fff8f1" class="float-b"/>
+            <circle cx="118" cy="28" r="2.5" fill="#f5c842"/>
+
+            <!-- Tiny star pixel decorations -->
+            <text x="48" y="45" font-size="10" fill="#f5c842" opacity="0.8" class="float-a">✦</text>
+            <text x="145" y="42" font-size="8" fill="#c87da0" opacity="0.9" class="float-b">✦</text>
+            <text x="62" y="178" font-size="7" fill="#a34063" opacity="0.8" class="float-a">✿</text>
+            <text x="130" y="182" font-size="7" fill="#7fb3e8" opacity="0.9" class="float-b">✿</text>
+
+            <!-- Tiny arms -->
+            <ellipse cx="51" cy="150" rx="14" ry="8" fill="#5c4033" transform="rotate(-30 51 150)"/>
+            <ellipse cx="149" cy="150" rx="14" ry="8" fill="#5c4033" transform="rotate(30 149 150)"/>
+
+            <!-- Tiny feet -->
+            <ellipse cx="83" cy="205" rx="16" ry="8" fill="#4a3028"/>
+            <ellipse cx="117" cy="205" rx="16" ry="8" fill="#4a3028"/>
+
+            <!-- Pixel glitch lines (decoration) -->
+            <rect x="58" y="130" width="10" height="2" fill="#a34063" opacity="0.4"/>
+            <rect x="130" y="145" width="8" height="2" fill="#7fb3e8" opacity="0.4"/>
+          </svg>
+
+          <!-- Small decorative pixel stars floating around Morrow -->
+          <span class="deco-star star-a" aria-hidden="true">★</span>
+          <span class="deco-star star-b" aria-hidden="true">✦</span>
+          <span class="deco-star star-c" aria-hidden="true">✿</span>
+        </div>
+
+        <div class="hero-text">
+          <!-- Tiny decorative label -->
+          <p class="hero-kicker" aria-hidden="true">✿ haX.baby · Track 2 · Original Character ✿</p>
+          <h1 class="hero-title">Morrow</h1>
+          <p class="hero-subtitle">The Error Gardener</p>
+          <p class="hero-tagline">"Even a little mistake can grow into something wonderful."</p>
+          <p class="hero-intro">
+            Deep in a forgotten corner of the internet lives Morrow — a small, curious creature
+            who collects abandoned ideas, forgotten words, and unfinished drawings…
+            and transforms them into impossible plants.
+          </p>
+          <div class="hero-actions">
+            <a href="#garden" class="btn btn-primary">Enter the Garden ✿</a>
+            <a href="#character" class="btn btn-secondary">Meet Morrow</a>
+          </div>
+
+          <!-- Small pixel decorative details -->
+          <div class="pixel-row" aria-hidden="true">
+            <span>✦</span><span>✿</span><span>★</span><span>✦</span><span>✿</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Floating garden decorations -->
+      <div class="hero-garden-strip" aria-hidden="true">
+        <span class="garden-plant p1">🌱</span>
+        <span class="garden-plant p2">✿</span>
+        <span class="garden-plant p3">🌸</span>
+        <span class="garden-plant p4">★</span>
+        <span class="garden-plant p5">✦</span>
+        <span class="garden-plant p6">🌱</span>
+        <span class="garden-plant p7">✿</span>
+      </div>
+    </section>
+
+    <!-- ══════════════════════════════════════════════
+         CHARACTER PROFILE (Track 2 character sheet)
+    ══════════════════════════════════════════════ -->
+    <section id="character" class="profile-section" aria-labelledby="character-heading">
+      <div class="section-wrap">
+
+        <div class="section-label-row" aria-hidden="true">
+          <span class="section-eyebrow">Character Sheet · Track 2</span>
+        </div>
+        <h2 id="character-heading" class="section-title">Meet Morrow</h2>
+
+        <div class="profile-card">
+          <!-- Field 1: NAME -->
+          <div class="profile-field reveal-on-scroll">
+            <span class="field-label">Name</span>
+            <div class="field-content">
+              <p class="field-value big-name">Morrow</p>
+              <span class="field-tag">The Error Gardener</span>
+            </div>
+          </div>
+
+          <!-- Field 2: WHAT THEY ARE -->
+          <div class="profile-field reveal-on-scroll">
+            <span class="field-label">What They Are</span>
+            <div class="field-content">
+              <p>
+                Morrow is a <strong>Glitch-Sprite</strong> — a rounded, palm-sized digital creature
+                made of warm static and soft code. Its body is a deep mahogany brown,
+                its eyes glow a vivid berry-pink, and two small flowers perpetually
+                sprout from the top of its head (one blush, one sky-blue — nobody knows why).
+              </p>
+              <p>
+                <strong>Personality:</strong> Curious, gentle, and slightly mischievous.
+                Morrow is sentimental about forgotten things and oddly fascinated by glitches
+                — those strange moments when the digital world does something it wasn't supposed to.
+              </p>
+            </div>
+          </div>
+
+          <!-- Field 3: WHAT THEY DO -->
+          <div class="profile-field reveal-on-scroll">
+            <span class="field-label">What They Do</span>
+            <div class="field-content">
+              <p>
+                Morrow is the internet's only <strong>Error Gardener</strong>.
+                When someone abandons an idea, forgets a word mid-sentence, or leaves a drawing
+                unfinished, tiny fragments of that lost creation drift across the internet like
+                dandelion seeds. Morrow catches them.
+              </p>
+              <p>
+                Each fragment is planted in Morrow's <em>Glitchbloom Garden</em>,
+                where it grows into a new kind of plant — strange, beautiful, and
+                completely unlike anything in the natural world.
+                A forgotten word can become a flower. An unfinished drawing can become a strange tree.
+              </p>
+            </div>
+          </div>
+
+          <!-- Field 4: THEIR STORY -->
+          <div class="profile-field reveal-on-scroll">
+            <span class="field-label">Their Story</span>
+            <div class="field-content">
+              <p>
+                Morrow appeared one quiet morning in the space between a closed browser tab and
+                a never-sent message. Nobody planted it. Nobody coded it. It simply… sprouted.
+              </p>
+              <p>
+                Over time, Morrow discovered that the internet was full of abandoned corners —
+                draft folders, deleted files, 404 pages — each brimming with fragments of
+                human creativity waiting to bloom. So Morrow built a garden there.
+              </p>
+              <p>
+                There is only one mystery Morrow cannot solve: it cannot remember
+                the <em>very first thing it ever planted</em>. Somewhere in the garden
+                is a plant with no name, no origin — just a soft glow and a faint warmth.
+                Maybe a visitor will help it remember.
+              </p>
+            </div>
+          </div>
+
+          <!-- Field 5: TAGLINE -->
+          <div class="profile-field reveal-on-scroll tagline-field">
+            <span class="field-label">Tagline</span>
+            <div class="field-content">
+              <blockquote class="character-tagline">
+                "Even a little mistake can grow into something wonderful."
+              </blockquote>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ══════════════════════════════════════════════
+         THREE PORTFOLIO PROJECTS
+    ══════════════════════════════════════════════ -->
+    <section id="projects" class="projects-section" aria-labelledby="projects-heading">
+      <div class="section-wrap">
+        <div class="section-label-row" aria-hidden="true">
+          <span class="section-eyebrow">Morrow's Portfolio</span>
+        </div>
+        <h2 id="projects-heading" class="section-title">Created Works</h2>
+
+        <div class="projects-grid">
+
+          <!-- PROJECT 01: THE ALMOST ARCHIVE -->
+          <article class="project-card project-01 reveal-on-scroll" aria-labelledby="proj1-title">
+            <div class="project-num" aria-hidden="true">01</div>
+            <div class="project-visual">
+              <!-- Inline SVG illustration: archive shelf -->
+              <svg viewBox="0 0 180 120" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" width="180" height="120">
+                <rect x="5" y="90" width="170" height="8" fill="#5c4033" rx="2"/>
+                <!-- Book spines -->
+                <rect x="15" y="55" width="18" height="37" fill="#a34063" rx="1"/>
+                <rect x="35" y="60" width="14" height="32" fill="#c87da0" rx="1"/>
+                <rect x="51" y="50" width="20" height="42" fill="#5c4033" rx="1"/>
+                <rect x="73" y="63" width="12" height="29" fill="#7fb3e8" rx="1"/>
+                <rect x="87" y="48" width="22" height="44" fill="#a5c4f0" rx="1"/>
+                <rect x="111" y="56" width="16" height="36" fill="#a34063" rx="1"/>
+                <rect x="129" y="58" width="18" height="34" fill="#6aad5e" rx="1"/>
+                <rect x="149" y="52" width="14" height="40" fill="#c87da0" rx="1"/>
+                <!-- Gold stars on books (abandoned ideas) -->
+                <text x="20" y="78" font-size="8" fill="#f5c842">✦</text>
+                <text x="92" y="72" font-size="8" fill="#fff8f1">✿</text>
+                <text x="133" y="74" font-size="8" fill="#f5c842">★</text>
+                <!-- Floating sparkles (fragments floating in) -->
+                <text x="55" y="35" font-size="9" fill="#a34063" opacity="0.7" class="float-a">✦</text>
+                <text x="100" y="28" font-size="7" fill="#7fb3e8" opacity="0.8" class="float-b">✿</text>
+                <text x="140" y="38" font-size="8" fill="#f5c842" opacity="0.6" class="float-a">★</text>
+                <!-- Shelf label -->
+                <rect x="60" y="95" width="60" height="10" fill="#fff8f1" rx="2" opacity="0.6"/>
+                <text x="90" y="103" font-size="7" fill="#5c4033" text-anchor="middle">ALMOST ARCHIVE</text>
+              </svg>
+            </div>
+            <div class="project-info">
+              <h3 class="project-title" id="proj1-title">The Almost Archive</h3>
+              <p class="project-meta">A magical library of lost beginnings</p>
+              <p class="project-desc">
+                Morrow collects abandoned ideas, half-finished sketches, and forgotten words —
+                preserving them in a glowing archive before they dissolve into noise.
+                Every book on these shelves is a story someone started but never finished.
+                Here, they are remembered forever.
+              </p>
+              <div class="project-tag-row">
+                <span class="project-tag">Preservation</span>
+                <span class="project-tag">Memory</span>
+                <span class="project-tag">Archive</span>
+              </div>
+              <!-- Interactive detail: hover to reveal a lost fragment -->
+              <button class="project-btn" id="archive-btn" aria-label="Reveal a lost fragment from the Almost Archive">
+                Reveal a Lost Fragment ✦
+              </button>
+              <p class="archive-fragment" id="archive-fragment" aria-live="polite" hidden></p>
+            </div>
+          </article>
+
+          <!-- PROJECT 02: GLITCHBLOOM -->
+          <article class="project-card project-02 reveal-on-scroll" aria-labelledby="proj2-title">
+            <div class="project-num" aria-hidden="true">02</div>
+            <div class="project-visual">
+              <svg viewBox="0 0 180 120" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" width="180" height="120">
+                <!-- Dark garden background -->
+                <rect x="0" y="0" width="180" height="120" fill="#1a0a0e" rx="8"/>
+                <!-- Stars -->
+                <text x="10" y="15" font-size="8" fill="#f5c842" opacity="0.6">✦</text>
+                <text x="160" y="12" font-size="6" fill="#fff8f1" opacity="0.5">★</text>
+                <text x="80" y="10" font-size="5" fill="#a5c4f0" opacity="0.7">✦</text>
+                <text x="130" y="20" font-size="6" fill="#c87da0" opacity="0.6">✿</text>
+                <!-- Glitch plants -->
+                <!-- Plant 1: error tulip -->
+                <rect x="22" y="75" width="4" height="30" fill="#6aad5e"/>
+                <ellipse cx="24" cy="70" rx="12" ry="16" fill="#a34063"/>
+                <rect x="21" y="68" width="6" height="4" fill="#fff8f1" opacity="0.3"/>
+                <rect x="20" y="72" width="8" height="2" fill="#fff8f1" opacity="0.4"/>
+                <!-- Plant 2: tall pixel cactus -->
+                <rect x="68" y="50" width="8" height="55" fill="#5a8f4a"/>
+                <rect x="52" y="68" width="16" height="5" fill="#5a8f4a"/>
+                <rect x="76" y="62" width="16" height="5" fill="#5a8f4a"/>
+                <circle cx="72" cy="50" r="5" fill="#c87da0"/>
+                <circle cx="72" cy="50" r="2.5" fill="#fff8f1"/>
+                <!-- Plant 3: glitch tree -->
+                <rect x="118" y="65" width="6" height="40" fill="#5c4033"/>
+                <circle cx="121" cy="58" r="18" fill="#4a7a3e" opacity="0.8"/>
+                <circle cx="110" cy="50" r="12" fill="#3d6433" opacity="0.8"/>
+                <circle cx="133" cy="53" r="12" fill="#3d6433" opacity="0.8"/>
+                <!-- Glitch artifacts on tree -->
+                <rect x="108" y="48" width="15" height="2" fill="#a34063" opacity="0.6"/>
+                <rect x="112" y="55" width="12" height="2" fill="#7fb3e8" opacity="0.5"/>
+                <!-- Small glowing flowers -->
+                <circle cx="40" cy="92" r="4" fill="#f5c842" opacity="0.7" class="float-a"/>
+                <circle cx="95" cy="88" r="3" fill="#c87da0" opacity="0.8" class="float-b"/>
+                <circle cx="150" cy="90" r="4" fill="#a5c4f0" opacity="0.7" class="float-a"/>
+                <!-- Ground -->
+                <rect x="0" y="105" width="180" height="15" fill="#1f0d12"/>
+              </svg>
+            </div>
+            <div class="project-info">
+              <h3 class="project-title" id="proj2-title">Glitchbloom</h3>
+              <p class="project-meta">A garden where errors grow beautiful</p>
+              <p class="project-desc">
+                When code crashes, when images corrupt, when a signal breaks —
+                Morrow captures those glitches and plants them in a midnight garden.
+                Each error becomes a flower unlike any other: impossible colours,
+                strange shapes, soft light in the digital dark.
+              </p>
+              <div class="project-tag-row">
+                <span class="project-tag">Digital Garden</span>
+                <span class="project-tag">Glitch Art</span>
+                <span class="project-tag">Night Blooms</span>
+              </div>
+              <button class="project-btn" id="glitch-btn" aria-label="See a glitch bloom animation">
+                Watch a Glitch Bloom ✿
+              </button>
+              <div class="glitch-bloom-area" id="glitch-bloom-area" aria-live="polite"></div>
+            </div>
+          </article>
+
+          <!-- PROJECT 03: TOMORROW'S SEED -->
+          <article class="project-card project-03 reveal-on-scroll" aria-labelledby="proj3-title">
+            <div class="project-num" aria-hidden="true">03</div>
+            <div class="project-visual">
+              <svg viewBox="0 0 180 120" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" width="180" height="120">
+                <!-- Soft, warm scene -->
+                <defs>
+                  <radialGradient id="seed-glow" cx="50%" cy="50%" r="50%">
+                    <stop offset="0%" stop-color="#f5c842" stop-opacity="0.4"/>
+                    <stop offset="100%" stop-color="#fff8f1" stop-opacity="0"/>
+                  </radialGradient>
+                </defs>
+                <ellipse cx="90" cy="75" rx="60" ry="40" fill="url(#seed-glow)"/>
+                <!-- The seed -->
+                <ellipse cx="90" cy="88" rx="12" ry="8" fill="#5c4033"/>
+                <ellipse cx="90" cy="88" rx="8" ry="5" fill="#a34063" opacity="0.7"/>
+                <!-- Sprouting stem -->
+                <path d="M90 82 Q90 60 90 50" stroke="#6aad5e" stroke-width="3" fill="none" stroke-linecap="round"/>
+                <!-- Leaf left -->
+                <path d="M90 65 Q70 58 68 48" stroke="#6aad5e" stroke-width="2" fill="none" stroke-linecap="round"/>
+                <ellipse cx="69" cy="51" rx="12" ry="7" fill="#6aad5e" transform="rotate(-30 69 51)" opacity="0.9"/>
+                <!-- Leaf right -->
+                <path d="M90 60 Q108 54 112 44" stroke="#6aad5e" stroke-width="2" fill="none" stroke-linecap="round"/>
+                <ellipse cx="111" cy="47" rx="12" ry="7" fill="#4a9a3d" transform="rotate(25 111 47)" opacity="0.9"/>
+                <!-- Bud at top -->
+                <circle cx="90" cy="48" r="8" fill="#a34063"/>
+                <circle cx="90" cy="44" r="6" fill="#c87da0"/>
+                <circle cx="90" cy="44" r="3" fill="#fff8f1"/>
+                <!-- Tiny glow dots around bud -->
+                <circle cx="78" cy="43" r="2.5" fill="#f5c842" opacity="0.8" class="float-a"/>
+                <circle cx="103" cy="41" r="2" fill="#a5c4f0" opacity="0.8" class="float-b"/>
+                <circle cx="84" cy="36" r="2" fill="#c87da0" opacity="0.7" class="float-a"/>
+                <!-- Word label -->
+                <rect x="55" y="95" width="70" height="16" fill="#fff8f1" rx="4" opacity="0.8"/>
+                <text x="90" y="107" font-size="8" fill="#5c4033" text-anchor="middle" font-style="italic">your word grows here</text>
+              </svg>
+            </div>
+            <div class="project-info">
+              <h3 class="project-title" id="proj3-title">Tomorrow's Seed</h3>
+              <p class="project-meta">An interactive word-to-plant experience</p>
+              <p class="project-desc">
+                Give Morrow a word — any word — and watch as it plants it in the garden.
+                Your word grows into a completely unique fictional plant, with its own name,
+                species, and story. No two visitors grow the same flower.
+              </p>
+              <div class="project-tag-row">
+                <span class="project-tag">Interactive</span>
+                <span class="project-tag">Generative</span>
+                <span class="project-tag">Personal</span>
+              </div>
+              <a href="#garden" class="project-btn">
+                Plant Your Word ✦
+              </a>
+            </div>
+          </article>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- ══════════════════════════════════════════════
+         INTERACTIVE ORIGIN STORY (4 scenes)
+    ══════════════════════════════════════════════ -->
+    <section id="story" class="story-section" aria-labelledby="story-heading">
+      <div class="section-wrap">
+        <div class="section-label-row" aria-hidden="true">
+          <span class="section-eyebrow">Morrow's Origin</span>
+        </div>
+        <h2 id="story-heading" class="section-title">A Story in Four Scenes</h2>
+
+        <!-- SCENE 1 -->
+        <div class="story-scene reveal-on-scroll" aria-labelledby="scene1-title">
+          <div class="scene-number" aria-hidden="true">I</div>
+          <div class="scene-content">
+            <h3 class="scene-title" id="scene1-title">The Forgotten Corner</h3>
+            <div class="scene-illo" aria-hidden="true">
+              <svg viewBox="0 0 120 80" width="120" height="80" xmlns="http://www.w3.org/2000/svg">
+                <!-- Dark web corner -->
+                <rect x="0" y="0" width="120" height="80" fill="#1a0a0e" rx="6"/>
+                <text x="8" y="20" font-size="8" fill="#444" font-family="monospace">404</text>
+                <text x="8" y="32" font-size="6" fill="#333" font-family="monospace">// unused</text>
+                <text x="70" y="15" font-size="7" fill="#333" font-family="monospace">draft.txt</text>
+                <!-- Drifting fragments -->
+                <text x="30" y="50" font-size="9" fill="#a34063" opacity="0.6" class="float-a">✦</text>
+                <text x="80" y="55" font-size="7" fill="#7fb3e8" opacity="0.5" class="float-b">✿</text>
+                <text x="55" y="35" font-size="8" fill="#f5c842" opacity="0.4" class="float-a">★</text>
+                <!-- Tiny Morrow peeking -->
+                <circle cx="95" cy="62" r="10" fill="#5c4033"/>
+                <circle cx="92" cy="59" r="3" fill="#fff8f1"/>
+                <circle cx="92" cy="59" r="1.5" fill="#a34063"/>
+                <circle cx="98" cy="59" r="3" fill="#fff8f1"/>
+                <circle cx="98" cy="59" r="1.5" fill="#a34063"/>
+              </svg>
+            </div>
+            <p class="scene-text">
+              Deep between a closed tab and a server that forgot to shut down,
+              Morrow discovered something remarkable: the internet was full of
+              beautiful wreckage. Abandoned drafts. Cancelled projects.
+              Undelivered messages. Each one still glowing faintly —
+              still wanting to exist.
+            </p>
+          </div>
+        </div>
+
+        <div class="story-connector" aria-hidden="true">
+          <span>↓</span>
+        </div>
+
+        <!-- SCENE 2 -->
+        <div class="story-scene reveal-on-scroll scene-alt" aria-labelledby="scene2-title">
+          <div class="scene-number" aria-hidden="true">II</div>
+          <div class="scene-content">
+            <h3 class="scene-title" id="scene2-title">The First Sprout</h3>
+            <div class="scene-illo" aria-hidden="true">
+              <svg viewBox="0 0 120 80" width="120" height="80" xmlns="http://www.w3.org/2000/svg">
+                <rect x="0" y="0" width="120" height="80" fill="#fff8f1" rx="6"/>
+                <!-- Error message becoming a plant -->
+                <rect x="8" y="12" width="50" height="20" fill="#ffe0e0" rx="3" opacity="0.8"/>
+                <text x="12" y="24" font-size="6" fill="#a34063" font-family="monospace">ERROR: null</text>
+                <!-- Arrow of transformation -->
+                <text x="65" y="26" font-size="12" fill="#a34063">→</text>
+                <!-- Plant growing from error -->
+                <rect x="88" y="55" width="3" height="20" fill="#6aad5e"/>
+                <circle cx="89" cy="50" r="10" fill="#a34063" opacity="0.8"/>
+                <circle cx="89" cy="50" r="5" fill="#fff8f1"/>
+                <circle cx="89" cy="50" r="2.5" fill="#f5c842"/>
+                <!-- Sparkles of magic -->
+                <text x="75" y="45" font-size="8" fill="#f5c842" class="float-a">✦</text>
+                <text x="100" y="40" font-size="7" fill="#c87da0" class="float-b">✿</text>
+              </svg>
+            </div>
+            <p class="scene-text">
+              Morrow picked up a broken error message — just a <code>null</code> reference,
+              nothing important — and planted it. Overnight, it grew into
+              a flower with petals the exact colour of a loading spinner
+              and leaves shaped like the corners of a browser frame.
+              Mistakes, Morrow realised, were seeds in disguise.
+            </p>
+          </div>
+        </div>
+
+        <div class="story-connector" aria-hidden="true">
+          <span>↓</span>
+        </div>
+
+        <!-- SCENE 3 -->
+        <div class="story-scene reveal-on-scroll" aria-labelledby="scene3-title">
+          <div class="scene-number" aria-hidden="true">III</div>
+          <div class="scene-content">
+            <h3 class="scene-title" id="scene3-title">The Missing Memory</h3>
+            <div class="scene-illo" aria-hidden="true">
+              <svg viewBox="0 0 120 80" width="120" height="80" xmlns="http://www.w3.org/2000/svg">
+                <rect x="0" y="0" width="120" height="80" fill="#f0e8f4" rx="6"/>
+                <!-- Memory file with hole -->
+                <rect x="20" y="15" width="80" height="50" fill="#fff8f1" rx="4" stroke="#c87da0" stroke-width="1.5"/>
+                <text x="30" y="30" font-size="6" fill="#5c4033" font-family="monospace">memory_001.log</text>
+                <text x="30" y="42" font-size="6" fill="#5c4033" font-family="monospace">memory_002.log</text>
+                <!-- The gap / missing entry -->
+                <rect x="28" y="47" width="64" height="8" fill="#f0e8f4" rx="2"/>
+                <text x="30" y="54" font-size="6" fill="#c87da0" font-family="monospace" font-style="italic">??? [missing]</text>
+                <text x="30" y="63" font-size="6" fill="#5c4033" font-family="monospace">memory_004.log</text>
+                <!-- Glowing question mark -->
+                <text x="100" y="35" font-size="18" fill="#a34063" opacity="0.5" class="float-b">?</text>
+              </svg>
+            </div>
+            <p class="scene-text">
+              One quiet evening, Morrow opened its memory logs — a careful record
+              of every fragment it had ever planted. There was a gap.
+              Right at the very beginning, between <em>nothing</em> and <em>everything</em>,
+              a single entry was missing. The very first plant. Morrow searched the garden
+              all night, but found only a soft, warm glow with no name.
+            </p>
+          </div>
+        </div>
+
+        <div class="story-connector" aria-hidden="true">
+          <span>↓</span>
+        </div>
+
+        <!-- SCENE 4 -->
+        <div class="story-scene reveal-on-scroll scene-alt" aria-labelledby="scene4-title">
+          <div class="scene-number" aria-hidden="true">IV</div>
+          <div class="scene-content">
+            <h3 class="scene-title" id="scene4-title">Your Visit</h3>
+            <div class="scene-illo" aria-hidden="true">
+              <svg viewBox="0 0 120 80" width="120" height="80" xmlns="http://www.w3.org/2000/svg">
+                <rect x="0" y="0" width="120" height="80" fill="#fff8f1" rx="6"/>
+                <!-- Path leading to garden -->
+                <path d="M10 70 Q35 60 60 65 Q85 70 110 55" stroke="#a34063" stroke-width="2" fill="none" stroke-dasharray="4,3" opacity="0.6"/>
+                <!-- Morrow at garden gate -->
+                <circle cx="90" cy="48" r="14" fill="#5c4033"/>
+                <circle cx="87" cy="44" r="4" fill="#fff8f1"/>
+                <circle cx="87" cy="44" r="2" fill="#a34063"/>
+                <circle cx="95" cy="44" r="4" fill="#fff8f1"/>
+                <circle cx="95" cy="44" r="2" fill="#a34063"/>
+                <!-- Hand outstretched / welcoming -->
+                <ellipse cx="78" cy="52" rx="7" ry="4" fill="#5c4033" transform="rotate(-20 78 52)"/>
+                <!-- Flowers along path -->
+                <circle cx="30" cy="65" r="4" fill="#a34063" opacity="0.6" class="float-a"/>
+                <circle cx="55" cy="62" r="3" fill="#c87da0" opacity="0.7" class="float-b"/>
+                <!-- You (visitor) as a small dot -->
+                <circle cx="18" cy="66" r="6" fill="#7fb3e8" opacity="0.8"/>
+                <text x="13" y="77" font-size="6" fill="#5c4033" font-family="monospace">you →</text>
+              </svg>
+            </div>
+            <p class="scene-text">
+              And then you arrived. Morrow looked up from the garden — those berry-pink eyes wide —
+              and felt something shift. Visitors bring their own forgotten things:
+              half-remembered words, discarded ideas, abandoned dreams.
+              Maybe one of those is the missing memory. Maybe you can help Morrow
+              find what was there at the very beginning.
+            </p>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- ══════════════════════════════════════════════
+         INTERACTIVE PLANT GENERATOR (main Tier 2 feature)
+    ══════════════════════════════════════════════ -->
+    <section id="garden" class="garden-section" aria-labelledby="garden-heading">
+      <div class="section-wrap">
+        <div class="section-label-row" aria-hidden="true">
+          <span class="section-eyebrow">Tomorrow's Seed · Interactive Feature</span>
+        </div>
+        <h2 id="garden-heading" class="section-title">Grow a Glitch Flower</h2>
+        <p class="section-intro">
+          Give Morrow a word — any word at all — and watch as it plants it in the garden.
+          Your word will grow into a unique fictional plant with its own name, species, and story.
+        </p>
+
+        <div class="garden-container">
+          <!-- Morrow prompt speech bubble -->
+          <div class="morrow-prompt" aria-hidden="true">
+            <p class="morrow-speech">
+              "Whisper a word to me… I'll plant it and show you what it becomes." 🌱
+            </p>
+          </div>
+
+          <!-- Input form -->
+          <form class="garden-form" id="garden-form" novalidate aria-label="Plant generator form">
+            <div class="input-group">
+              <label for="word-input" class="garden-label">
+                Your word or idea
+                <span class="label-hint">(keep it short — one to three words)</span>
+              </label>
+              <div class="input-row">
+                <input
+                  type="text"
+                  id="word-input"
+                  name="word"
+                  class="word-input"
+                  placeholder="e.g. melancholy, broken clock, hello…"
+                  maxlength="40"
+                  autocomplete="off"
+                  spellcheck="false"
+                  aria-required="true"
+                  aria-describedby="word-hint word-error"
+                />
+                <button type="submit" class="grow-btn" id="grow-btn">
+                  Grow a Glitch Flower 🌱
+                </button>
+              </div>
+              <p class="input-hint" id="word-hint" aria-live="polite">
+                Up to 40 characters. No internet required.
+              </p>
+              <p class="input-error" id="word-error" role="alert" aria-live="assertive" hidden></p>
+            </div>
+          </form>
+
+          <!-- Plant result area -->
+          <div
+            class="plant-result"
+            id="plant-result"
+            aria-live="polite"
+            aria-atomic="true"
+            hidden
+          >
+            <div class="plant-result-inner">
+              <!-- SVG plant illustration (generated dynamically) -->
+              <div class="plant-svg-wrap" id="plant-svg-area" aria-hidden="true"></div>
+
+              <div class="plant-info">
+                <p class="plant-grown-from">
+                  Grown from: <strong id="plant-source-word"></strong>
+                </p>
+                <h3 class="plant-name" id="plant-name"></h3>
+                <p class="plant-species" id="plant-species"></p>
+                <p class="plant-desc" id="plant-desc"></p>
+                <p class="plant-morrow-note" id="plant-morrow-note"></p>
+              </div>
+            </div>
+
+            <button class="grow-another-btn" id="grow-another-btn">
+              Grow another ✦
+            </button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ══════════════════════════════════════════════
+         EASTER EGG SECTION (hidden room / secret)
+    ══════════════════════════════════════════════ -->
+    <!-- The clue is in the footer — look for the glowing pixel flower -->
+    <div
+      class="secret-room"
+      id="secret-room"
+      role="dialog"
+      aria-modal="true"
+      aria-labelledby="secret-title"
+      hidden
+      tabindex="-1"
+    >
+      <div class="secret-inner">
+        <button class="secret-close" id="secret-close" aria-label="Close secret room">✕</button>
+        <div class="secret-content">
+          <div class="secret-glow" aria-hidden="true">✿</div>
+          <h2 class="secret-title" id="secret-title">You found the First Seed</h2>
+          <p class="secret-text">
+            This is what Morrow couldn't remember. Not an error, not a glitch —
+            just a tiny, ordinary flower. The very first one. It doesn't have a name.
+            It doesn't need one. It was planted when Morrow first looked at something
+            broken and thought: <em>"I wonder what this could grow into?"</em>
+          </p>
+          <p class="secret-text">
+            You found it. Now it has a witness.
+          </p>
+          <div class="secret-flower" aria-hidden="true">
+            <svg viewBox="0 0 100 100" width="100" height="100" xmlns="http://www.w3.org/2000/svg">
+              <!-- Nameless flower -->
+              <circle cx="50" cy="50" r="42" fill="none" stroke="#a34063" stroke-width="0.5" opacity="0.3"/>
+              <circle cx="50" cy="30" r="12" fill="#c87da0" opacity="0.8" class="float-a"/>
+              <circle cx="50" cy="70" r="12" fill="#c87da0" opacity="0.8" class="float-a"/>
+              <circle cx="30" cy="50" r="12" fill="#a34063" opacity="0.8" class="float-b"/>
+              <circle cx="70" cy="50" r="12" fill="#a34063" opacity="0.8" class="float-b"/>
+              <circle cx="36" cy="36" r="9" fill="#e8a0b8" opacity="0.7" class="float-a"/>
+              <circle cx="64" cy="36" r="9" fill="#e8a0b8" opacity="0.7" class="float-a"/>
+              <circle cx="36" cy="64" r="9" fill="#e8a0b8" opacity="0.7" class="float-b"/>
+              <circle cx="64" cy="64" r="9" fill="#e8a0b8" opacity="0.7" class="float-b"/>
+              <circle cx="50" cy="50" r="14" fill="#fff8f1"/>
+              <circle cx="50" cy="50" r="8" fill="#f5c842"/>
+              <circle cx="50" cy="50" r="3" fill="#5c4033"/>
+            </svg>
+          </div>
+          <p class="secret-signature">
+            — Morrow ✿
+          </p>
+        </div>
+      </div>
+    </div>
+    <!-- Overlay backdrop for secret room -->
+    <div class="secret-overlay" id="secret-overlay" hidden aria-hidden="true"></div>
+
+  </main>
+
+  <!-- ══════════════════════════════════════════════
+       FOOTER & CREDITS
+  ══════════════════════════════════════════════ -->
+  <footer id="footer" class="site-footer" role="contentinfo">
+    <div class="footer-inner">
+
+      <div class="footer-morrow">
+        <p class="footer-brand">Morrow ✿ The Error Gardener</p>
+        <p class="footer-closing">
+          "The garden is always open. Every mistake is welcome here.
+          Thank you for visiting — you left something behind too,
+          even if you don't know what it is yet."
+        </p>
+        <p class="footer-sig">— Morrow</p>
+      </div>
+
+      <div class="footer-details">
+        <nav class="footer-nav" aria-label="Footer navigation">
+          <a href="#hero">Home</a>
+          <a href="#character">About</a>
+          <a href="#projects">Projects</a>
+          <a href="#story">Story</a>
+          <a href="#garden">Garden</a>
+        </nav>
+
+        <div class="footer-credits">
+          <h3 class="credits-title">Credits</h3>
+          <ul class="credits-list">
+            <li>
+              <strong>Project:</strong> Morrow — The Error Gardener
+              · haX.baby Baby's First Website Hackathon · Track 2
+            </li>
+            <li>
+              <strong>Character &amp; Concept:</strong> Original character and world created for this hackathon.
+              All writing, design, and creative direction is original work.
+            </li>
+            <li>
+              <strong>Character Illustration:</strong> Original inline SVG artwork created with code for this project.
+              No external images or stock art used.
+            </li>
+            <li>
+              <strong>Fonts:</strong>
+              <a href="https://fonts.google.com/specimen/Playfair+Display" target="_blank" rel="noopener noreferrer">Playfair Display</a>
+              and
+              <a href="https://fonts.google.com/specimen/Fredoka" target="_blank" rel="noopener noreferrer">Fredoka</a>
+              via Google Fonts (SIL Open Font Licence 1.1). System serif and sans-serif fallbacks are defined.
+            </li>
+            <li>
+              <strong>Libraries:</strong> None. Built with plain HTML5, CSS3, and vanilla JavaScript.
+            </li>
+            <li>
+              <strong>No external APIs, tracking scripts, or paid services were used.</strong>
+            </li>
+          </ul>
+        </div>
+
+        <div class="footer-github">
+          <a
+            href="https://github.com/YOUR-USERNAME/morrow-the-error-gardener"
+            target="_blank"
+            rel="noopener noreferrer"
+            class="github-link"
+            id="github-link"
+          >
+            ✦ View on GitHub
+          </a>
+          <p class="github-note">
+            (Replace <code>YOUR-USERNAME</code> with your actual GitHub username before submitting.)
+          </p>
+        </div>
+      </div>
+
+      <!-- EASTER EGG CLUE: a subtle glowing pixel flower in the corner -->
+      <button
+        class="secret-trigger"
+        id="secret-trigger"
+        aria-label="A mysterious glowing flower — click to discover Morrow's secret"
+        title="Something is hidden here…"
+      >
+        <span class="secret-flower-pixel" aria-hidden="true">✿</span>
+      </button>
+
+      <div class="footer-bottom">
+        <p>
+          ✦ Made for <a href="https://hax.baby/first-website" target="_blank" rel="noopener noreferrer">Baby's First Website</a>
+          hackathon · October 2026 ✦
+        </p>
+      </div>
+    </div>
+  </footer>
+
+  <script src="script.js"></script>
+</body>
+</html>
